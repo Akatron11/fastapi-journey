@@ -1,12 +1,11 @@
-1. What is an ODM and why do we use Beanie instead of writing raw MongoDB queries?
-An ODM is like a translator. It lets us talk to MongoDB using Python objects instead of messy JSON-style code. We use Beanie because it’s super smart—it handles data validation automatically and works perfectly with FastAPI, saving us a lot of extra work.
+1. Why does `DATABASE_URL` use `mongo` as the hostname instead of `localhost`? What would happen if you kept `localhost`?
+we access the database via the service name using a docker network
 
-2. What is the role of the `Database` class — why wrap Beanie methods inside it instead of calling them directly in routes?
-Think of this as the "engine room." We put all our logic for adding, deleting, or finding data here. By keeping these tasks in one place, our main routes stay clean and short. It just makes the whole project much more organized.
+2. What does `depends_on` in `docker-compose.yml` do? Does it guarantee MongoDB is fully ready before FastAPI starts — and if not, what would?
+this ensures the API starts after mongodb and mongodb also needs to be ready
 
-3. What happens if `initialize_database()` is not called on startup? What would break and why?
-The app won't be able to "talk" to the database. It’s like trying to make a phone call without a signal. The app might run, but the second you try to save or see any data, it will crash because the connection was never established.
+3. What is the purpose of the volume in the `mongo` service? What happens to your data if you remove it and run `docker compose down`?
+this ensures that the data remains on the computer even if the container is deleted
 
-4. What is the difference between the `Event` document and the `EventUpdate` model, and why are they two separate classes?
-The Event document is the "master rulebook" for how data must look in the database. The EventUpdate model is a flexible version where everything is optional. We use it for updates so the user can change just one thing (like the time) without having to re-type all the other info.
-
+4. Why do we copy `requirements.txt` and run `pip install` before copying the rest of the app code in the Dockerfile?
+even if the code changes the pip install command doesnt need to be repeated as long as the library remains the same,this speeds up the process
