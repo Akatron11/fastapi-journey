@@ -1,3 +1,17 @@
+**Part A**
+1. What is an ODM and why do we use Beanie instead of writing raw MongoDB queries?
+ODM is like a translator between python and mongodb. mongodb stores stuff in json-ish docs, but we want to work with python classes. beanie makes the code way cleaner and easier to read since we just use python objects instead of messy dictionaries.
+
+2. What is the role of the `Database` class — why wrap Beanie methods inside it instead of calling them directly in routes?
+if we put database logic directly in our routes, the code becomes a giant mess. it's just better organization.
+
+3. What happens if `initialize_database()` is not called on startup? What would break and why?
+if this doesn't run when the app starts, the app basically doesn't know the database exists.
+
+4. What is the difference between the `Event` document and the `EventUpdate` model, and why are they two separate classes?
+
+
+**Part B**
 1. Why does `DATABASE_URL` use `mongo` as the hostname instead of `localhost`? What would happen if you kept `localhost`?
 we access the database via the service name using a docker network
 
